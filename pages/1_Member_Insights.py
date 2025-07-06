@@ -8,9 +8,6 @@ from utils.filtering import apply_common_filters
 
 st.title("👥 Member Insights")
 # === File Upload with Session Persistence ===
-if "members_eval_df" not in st.session_state:
-    st.session_state.member_eval_df = None
-    
 # File upload
 member_file = st.sidebar.file_uploader("Upload Member Records", type=["xlsx", "csv"])
 
@@ -20,7 +17,12 @@ if member_file is not None:
     st.session_state.members_eval_df = df
     st.sidebar.success("✅ Member data uploaded and cleaned.")
 
-if st.session_state.members_eval_df is not None:
+if "members_eval_df" not in st.session_state:
+    st.session_state.member_eval_df = None
+    st.info("⬆️ Upload a Member Records file to begin.")
+
+
+elif st.session_state.members_eval_df is not None:
     df = st.session_state.members_eval_df
     st.sidebar.markdown("📂 Using previously uploaded file. [🔄 Upload a new one above to replace.]")
 
