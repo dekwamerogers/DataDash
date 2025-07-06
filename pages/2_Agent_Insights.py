@@ -8,8 +8,7 @@ st.set_page_config(page_title="Agent Insights", page_icon="🧑‍💼", layout=
 st.title("🧑‍💼 Agent Insights")
 
 # === File Upload with Session Persistence ===
-if "agent_eval_df" not in st.session_state:
-    st.session_state.agent_eval_df = None
+
 
 uploaded_file = st.sidebar.file_uploader("Upload Agent Evaluation File", type=["csv", "xlsx"])
 
@@ -18,9 +17,12 @@ if uploaded_file is not None:
     df = load_excel_file(uploaded_file)
     st.session_state.agent_eval_df = df
 
+if "agent_eval_df" not in st.session_state:
+    st.session_state.agent_eval_df = None
+    st.info("📥 Please upload the **Agent Evaluation file** to get started.")
 
 # Use stored data
-if st.session_state.agent_eval_df is not None:
+elif st.session_state.agent_eval_df is not None:
     df = st.session_state.agent_eval_df
     st.sidebar.markdown("📂 Using previously uploaded file. [🔄 Upload a new one above to replace.]")
 
